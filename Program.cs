@@ -4,74 +4,40 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Market
+namespace Team
 {
     class Program
     {
         static void Main(string[] args)
         {
-            string[] input = Console.ReadLine().Split().ToArray();
-            List<string[]> allIn = new List<string[]>();
-
-            Shop shop = new Shop();
-            List<Product> prs = new List<Product>(); //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            shop.Spisyk = prs; //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            while (!input.Contains ("Close"))
+            string[] firstLine = Console.ReadLine().Split(';').ToArray();
+            string[] inputs = Console.ReadLine().Split(';').ToArray();
+            Team team = new Team();
+            List<Person> list = new List<Person>();
+            while (!inputs.Contains("END"))
             {
-                allIn.Add(input);
-                input = Console.ReadLine().Split().ToArray();
-            }
-            for (int i = 0; i < allIn.Count; i++)
-            {
-                //Console.WriteLine(allIn[i][0] + " /////");
-                if (String.Equals(allIn[i][0], "Add"))
+                if (String.Equals(inputs[0], "Add"))
                 {
-                    Product pr = new Product(allIn[i][1], allIn[i][2], double.Parse(allIn[i][3]), double.Parse(allIn[i][4]));
-                    //pr.ToString();
-                    prs.Add(pr);
-                    
-                    //shop.Add(allIn[i][1], allIn[i][2], double.Parse(allIn[i][3]), double.Parse(allIn[i][4]));
+                    Person per = new Person(inputs[2], int.Parse(inputs[3]), int.Parse(inputs[4]), int.Parse(inputs[5]), int.Parse(inputs[6]), int.Parse(inputs[7]));
+                    list.Add(per);
+                    team.Add(inputs[1], list);
+                    //team.Print2();
                 }
                 else
                 {
-                    if (String.Equals(allIn[i][0], "Sell"))
+                    if (String.Equals(inputs[0], "Remove") && team.List != null )
                     {
-                        shop.Sell(allIn[i][1], double.Parse(allIn[i][2]));
+                        Console.WriteLine(inputs[2]);
+                        team.Remove(team,inputs[2]);
                     }
                     else
                     {
-                        if (String.Equals(allIn[i][0], "Update"))
-                        {
-                            shop.Update(allIn[i][1], double.Parse(allIn[i][2]));
-                        }
-                        else
-                        {
-                            if (String.Equals(allIn[i][0], "PrintA"))
-                            {
-                                shop.PrintA();
-                            }
-                            else
-                            {
-                                if (String.Equals(allIn[i][0], "PrintU"))
-                                {
-                                    shop.PrintU();
-                                }
-                                else
-                                {
-                                    if (String.Equals(allIn[i][0], "PrintD"))
-                                    {
-                                        shop.PrintD();
-                                    }
-                                    else
-                                    {
-                                        shop.Calculate();
-                                    }
-                                }
-                            }
-                        }
+                        team.Rating();
                     }
                 }
+                inputs = Console.ReadLine().Split(';').ToArray();
             }
+            team.Print();
         }
     }
 }
