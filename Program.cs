@@ -4,41 +4,74 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace salary
+namespace Market
 {
     class Program
     {
         static void Main(string[] args)
         {
-            byte n = byte.Parse(Console.ReadLine());
-            List<person> people = new List<person>();
-            List<string[]> list = new List<string[]>();
-            person per = new person();
-            for (int i = 0; i < n; i++)
-            {
-                string[] input = Console.ReadLine().Split().ToArray();
-                list.Add(input);
+            string[] input = Console.ReadLine().Split().ToArray();
+            List<string[]> allIn = new List<string[]>();
 
+            Shop shop = new Shop();
+            List<Product> prs = new List<Product>(); //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            shop.Spisyk = prs; //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            while (!input.Contains ("Close"))
+            {
+                allIn.Add(input);
+                input = Console.ReadLine().Split().ToArray();
             }
-            float percent = float.Parse(Console.ReadLine());
-            for (int i = 0; i < list.Count; i++)
+            for (int i = 0; i < allIn.Count; i++)
             {
-                per = new person(list[i][0], list[i][1], sbyte.Parse(list[i][2]), double.Parse(list[i][3]));
-                if (list[i][0].Length < 3 || list[i][1].Length < 3 || sbyte.Parse(list[i][2]) < 0 || double.Parse(list[i][3]) < 460.00)
+                //Console.WriteLine(allIn[i][0] + " /////");
+                if (String.Equals(allIn[i][0], "Add"))
                 {
-
+                    Product pr = new Product(allIn[i][1], allIn[i][2], double.Parse(allIn[i][3]), double.Parse(allIn[i][4]));
+                    //pr.ToString();
+                    prs.Add(pr);
+                    
+                    //shop.Add(allIn[i][1], allIn[i][2], double.Parse(allIn[i][3]), double.Parse(allIn[i][4]));
                 }
                 else
                 {
-                    people.Add(per);
-
+                    if (String.Equals(allIn[i][0], "Sell"))
+                    {
+                        shop.Sell(allIn[i][1], double.Parse(allIn[i][2]));
+                    }
+                    else
+                    {
+                        if (String.Equals(allIn[i][0], "Update"))
+                        {
+                            shop.Update(allIn[i][1], double.Parse(allIn[i][2]));
+                        }
+                        else
+                        {
+                            if (String.Equals(allIn[i][0], "PrintA"))
+                            {
+                                shop.PrintA();
+                            }
+                            else
+                            {
+                                if (String.Equals(allIn[i][0], "PrintU"))
+                                {
+                                    shop.PrintU();
+                                }
+                                else
+                                {
+                                    if (String.Equals(allIn[i][0], "PrintD"))
+                                    {
+                                        shop.PrintD();
+                                    }
+                                    else
+                                    {
+                                        shop.Calculate();
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
-                
-                
             }
-            per.Bonus(people, percent);
-            per.Print(people);
-
         }
     }
 }

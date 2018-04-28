@@ -4,74 +4,47 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BonApetit
+namespace Market
 {
     class Product
     {
         private string name;
+        private string barcode;
         private double price;
-        private int weight;
-        private List<Product> list;
+        private double kg;
+        private List<Product> spisyk;
 
-        public Product() { }
-        public string Name
-        {
+        public List<Product> Spisyk {
+            get { return this.spisyk; }
+            set { this.spisyk = value; }
+            
+        }
+        public string Name {
             get { return this.name; }
             set { this.name = value; }
         }
-        public double Price
-        {
+        public string Barcode {
+            get { return this.barcode; }
+            set { this.barcode = value; }
+        }
+        public double Price {
             get { return this.price; }
             set { this.price = value; }
         }
-        public int Weight
-        {
-            get { return this.weight; }
-            set { this.weight = value; }
+        public double Kg {
+            get { return this.kg; }
+            set { this.kg = value; }
         }
-        public List<Product> List
-        {
-            get { return this.list; }
-            set { this.list = value; }
-        }
-        public Product(string name, double price, int weight)
-        {
+        public Product(string bar, string name, double price, double kg) {
+            this.Barcode = bar;
             this.Name = name;
             this.Price = price;
-            this.Weight = weight;
-            this.List = new List<Product>();
+            this.Kg = kg;
+            
         }
-        public void AddProduct(string name, double price, int weight)
+        public void ToString()
         {
-            Product pr = new Product(name, price, weight);
-            //this.Name = name;
-            // this.Price = price;
-            //this.Weight = weight;
-            List.Add(pr);
+            Console.WriteLine($"{name} {barcode } {price } {kg}"); ;
         }
-        public void AddMultiProducts(byte num)
-        {
-            for (int i = 0; i < num; i++)
-            {
-                string[] inputs = Console.ReadLine().Split().ToArray();
-                Product pr = new Product(inputs[0], double.Parse(inputs[1]), int.Parse(inputs[2]));
-                // this.Name = inputs[0];
-                //this.Price = double.Parse(inputs[1]);
-                //this.Weight = int.Parse(inputs[2]);
-                List.Add(pr);
-            }
-        }
-        public void PrintProduct(string name)
-        {
-            foreach (var item in List)
-            {
-                if (string.Equals(item.Name, name))
-                {
-                    Console.WriteLine($"{item.Name} - {item.Weight}");
-                }
-            }
-
-        }
-        
     }
 }
