@@ -4,66 +4,92 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Callories
+namespace BigTruck
 {
     class Program
     {
         static void Main(string[] args)
         {
-            string[] input = Console.ReadLine().Split().ToArray();
+            List<Truck> allTr = new List<Truck>();
+            List<Freight> allFr = new List<Freight>();
             List<string[]> all = new List<string[]>();
-            Pizza piz = new Pizza();
-            Dought dou = new Dought();
-            Topping top = new Topping();
-            double call = 0;
+            List<string[]> all2 = new List<string[]>();            
+            byte count = 0;
 
-            while (!input.Contains("END"))
-            {
-                all.Add(input);
-                input = Console.ReadLine().Split().ToArray();
-            }
+            string[] input = Console.ReadLine().Split(';').ToArray();
+            all.Add(input);
+            input = Console.ReadLine().Split(';').ToArray();
+            all.Add(input);
+           
             for (int i = 0; i < all.Count; i++)
-            {
-                if (all[i][0] == "Dough")
+            {                
+                for (int y = 0; y < input.Length; y++)
                 {
-                    dou = new Dought(all[i][1].ToLower(), all[i][2].ToLower(), float.Parse(all[i][3]));
-                    if (dou.What == false)
-                    {
-                        break;
-                    }
-                    call += dou.Callorie;
-                    //dou.Print();
+                    string[] split = all[i][y].Split('=').ToArray();
 
-                }
-                else
-                {
-                    if (String.Equals(all[i][0], "Topping"))
+                    if (count < 3)
                     {
-                        top = new Topping(all[i][1], ushort.Parse(all[i][2]));
-                        if (top.What == false)
-                        {
-                            break;
-                        }
-                        call += top.Call;
-                        // top.PrintCall();
+                        Truck tr = new Truck(split[0], ushort.Parse(split[1]));
+                        count++;
+                        allTr.Add(tr);
+
                     }
                     else
                     {
-                        piz = new Pizza(all[i][1], byte.Parse(all[i][2]));
-                        if (piz.What == false)
-                        {
-                            break;
-                        }
+                        Freight fr = new Freight(split[0], ushort.Parse(split[1]));
+                        allFr.Add(fr);
                     }
                 }
 
             }
-            if (piz.What == true && dou.What == true && top.What == true)
+            string[] input2 = Console.ReadLine().Split().ToArray();
+            while (!input2.Contains("END"))
             {
-                Console.WriteLine($"{piz.NameP} - {call:f2} Callories");
+                foreach (var item in allTr)
+                {
+                    if (String.Equals(item.Name, input2[0]))
+                    {
+                        foreach (var pair in allFr)
+                        {
+                            if (String.Equals(pair.Name, input2[1]))
+                            {
+                                if (item.Izdryj >= pair.Tovi)
+                                {
+                                    item.Izdryj -= pair.Tovi;
+                                    if (item.Tovar == null || item.Tovar != null)
+                                    {
+                                        item.AddTovi(pair.Name);
+                                    }
+
+                                    Console.WriteLine($"{item.Name} loaded {pair.Name} ");
+                                }
+                                else
+                                {
+                                    Console.WriteLine($"{item.Name} can't loaded {pair.Name} ");
+                                }
+
+                            }
+                        }
+                    }
+                    
+                }
+                input2 = Console.ReadLine().Split().ToArray();
             }
+            Console.WriteLine();
+            foreach (var item in allTr)
+            {
+                Console.Write($"{item.Name} - ");
+                if (item.Tovi  == null)
+                {
+                    Console.WriteLine("Nothing loaded");
+                }
+                else
+                {
+                    item.Print(item.Tovi);
+                }
 
 
+            }
         }
     }
 }
