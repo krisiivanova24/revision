@@ -1,0 +1,7 @@
+C:\Users\hristo\source\repos\15.04\Pokemon\bin\Debug\Pokemon.exe.config
+C:\Users\hristo\source\repos\15.04\Pokemon\bin\Debug\Pokemon.exe
+C:\Users\hristo\source\repos\15.04\Pokemon\bin\Debug\Pokemon.pdb
+C:\Users\hristo\source\repos\15.04\Pokemon\obj\Debug\Pokemon.csproj.CoreCompileInputs.cache
+C:\Users\hristo\source\repos\15.04\Pokemon\obj\Debug\Pokemon.exe
+C:\Users\hristo\source\repos\15.04\Pokemon\obj\Debug\Pokemon.pdb
+C:\Users\hristo\source\repos\15.04\Pokemon\obj\Debug\Pokemon.csprojResolveAssemblyReference.cache
